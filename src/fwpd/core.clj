@@ -1,4 +1,5 @@
-(ns fwpd.core)
+(ns fwpd.core
+  (require [clojure.string :as str]))
 
 (def filename "suspects.csv")
 
@@ -14,3 +15,7 @@
 (defn convert
   [vamp-key value]
   ((get conversions vamp-key) value))
+
+(defn parse
+  [contents]
+  (map #(str/split % #",") (str/split contents #"\n")))
