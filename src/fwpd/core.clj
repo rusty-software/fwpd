@@ -64,5 +64,12 @@
   [suspects {:keys [name glitter-index]}]
   (conj suspects {:name name :glitter-index glitter-index}))
 
+(defn unparse
+  "Given a seq of suspect maps, returns a csv string"
+  [suspects]
+  (str/join "\n"
+            (for [suspect suspects]
+              (str/join "," (vals suspect)))))
+
 (defn -main [& args]
   (filtered-maps-from-file))

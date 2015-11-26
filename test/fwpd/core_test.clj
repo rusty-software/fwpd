@@ -51,3 +51,11 @@
     (is (valid-record? validators {:name "n1" :glitter-index 0})))
   (testing "given a bad map, returns false"
     (is (not (valid-record? validators {:name nil :glitter-index 1})))))
+
+(deftest unparse-tests
+  (testing "given a good seq of maps, converts them into comma and newline separated string"
+    (let [suspects [{:name "s 1" :glitter-index 3}
+                    {:name "s 2" :glitter-index 9}
+                    {:name "s 3" :glitter-index 0}]
+          expected "s 1,3\ns 2,9\ns 3,0"]
+      (is (= expected (unparse suspects))))))
