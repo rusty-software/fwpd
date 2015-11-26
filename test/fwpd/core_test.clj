@@ -25,8 +25,7 @@
     (let [maps [{:name "Edward Cullen" :glitter-index 10}
                 {:name "Bella Swan" :glitter-index 0}
                 {:name "George Buttz" :glitter-index 5}]]
-      (is (= [{:name "Edward Cullen" :glitter-index 10}]
+      (is (= ["Edward Cullen"]
              (glitter-filter maps 6)))
-      (is (= [{:name "Edward Cullen" :glitter-index 10}
-              {:name "George Buttz" :glitter-index 5}]
+      (is (= ["Edward Cullen" "George Buttz"]
              (glitter-filter maps 5))))))
