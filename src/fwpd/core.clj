@@ -44,5 +44,25 @@
     (mapify)
     (glitter-filter 3)))
 
+(def validators
+  {:name (fn [n] (not (empty? n)))
+   :glitter-index (fn [i] (and (number? i) (> i -1)))})
+
+(defn valid?
+  "Returns the validator function result for the given key and value"
+  [validators-map vamp-key value]
+  ((get validators-map vamp-key) value))
+
+(defn valid-record?
+  "Validates that the expected keys are present in the record"
+  [validators record]
+  (every? true? (for [[vamp-key validator] validators]
+         (validator (vamp-key record)))))
+
+(defn append
+  "Appends a row to the seq of maps of suspects.  NOTE this does not append to the file."
+  [suspects {:keys [name glitter-index]}]
+  (conj suspects {:name name :glitter-index glitter-index}))
+
 (defn -main [& args]
   (filtered-maps-from-file))

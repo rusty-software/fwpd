@@ -29,3 +29,25 @@
              (glitter-filter maps 6)))
       (is (= ["Edward Cullen" "George Buttz"]
              (glitter-filter maps 5))))))
+
+(deftest append-tests
+  (testing "given a seq of maps of suspects, adds another to the seq"
+    (let [suspects [{:name "s1" :glitter-index 3}]]
+      (is (= [{:name "s1" :glitter-index 3}
+              {:name "added" :glitter-index 2}]
+             (append suspects {:name "added" :glitter-index 2}))))))
+
+(deftest valid?-tests
+  (is (valid? validators :name "n1"))
+  (is (valid? validators :glitter-index 9))
+  (is (not (valid? validators :name nil)))
+  (is (not (valid? validators :name "")))
+  (is (not (valid? validators :glitter-index nil)))
+  (is (not (valid? validators :glitter-index -1)))
+  (is (not (valid? validators :glitter-index "harry"))))
+
+(deftest valid-record?-tests
+  (testing "given a good map, returns true"
+    (is (valid-record? validators {:name "n1" :glitter-index 0})))
+  (testing "given a bad map, returns false"
+    (is (not (valid-record? validators {:name nil :glitter-index 1})))))
