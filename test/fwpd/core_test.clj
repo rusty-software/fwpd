@@ -11,3 +11,22 @@
 (deftest parse-tests
   (testing "given a string, returns a seq of vector entries"
     (is (= [["Edward Cullen" "10"] ["Bella Swan" "0"]] (parse "Edward Cullen,10\nBella Swan,0\n")))))
+
+(deftest mapify-tests
+  (testing "given a seq of row vectors, return a seq of maps"
+    (let [rows [["Edward Cullen" "10"] ["Bella Swan" "0"] ["George Buttz" "5"]]
+          expected [{:name "Edward Cullen" :glitter-index 10}
+                    {:name "Bella Swan" :glitter-index 0}
+                    {:name "George Buttz" :glitter-index 5}]]
+      (is (= expected (mapify rows))))))
+
+(deftest glitter-filter-tests
+  (testing "given a minimum glitter-index, returns seq of maps passing filter"
+    (let [maps [{:name "Edward Cullen" :glitter-index 10}
+                {:name "Bella Swan" :glitter-index 0}
+                {:name "George Buttz" :glitter-index 5}]]
+      (is (= [{:name "Edward Cullen" :glitter-index 10}]
+             (glitter-filter maps 6)))
+      (is (= [{:name "Edward Cullen" :glitter-index 10}
+              {:name "George Buttz" :glitter-index 5}]
+             (glitter-filter maps 5))))))
